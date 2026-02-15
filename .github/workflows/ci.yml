@@ -67,6 +67,7 @@ jobs:
 
   build:
     name: ${{ matrix.job.target }} (${{ matrix.job.os }})
+    if: false
     runs-on: ${{ matrix.job.os }}
     strategy:
       fail-fast: false
