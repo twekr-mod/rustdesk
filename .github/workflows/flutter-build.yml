@@ -233,9 +233,26 @@ jobs:
         with:
           name: rustdesk-unsigned-windows-${{ matrix.job.arch }}
           path: rustdesk
+      
+      - name: Download unsigned artifact
+        if: env.UPLOAD_ARTIFACT == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: rustdesk-unsigned-windows-${{ matrix.job.arch }}
+          path: ./artifacts
+
+      - name: Publish release for unsigned artifact
+        if: env.UPLOAD_ARTIFACT == 'true'
+        uses: softprops/action-gh-release@v1
+        with:
+          files: ./artifacts/**/*
+          tag_name: ${{ env.TAG_NAME }}
+          draft: false
+          prerelease: false
 
       - name: Sign rustdesk files
-        if: env.UPLOAD_ARTIFACT == 'true' && env.SIGN_BASE_URL != ''
+        # if: env.UPLOAD_ARTIFACT == 'true' && env.SIGN_BASE_URL != ''
+        if: false
         shell: bash
         run: |
           pip3 install requests argparse
@@ -243,7 +260,8 @@ jobs:
 
       - name: Build self-extracted executable
         shell: bash
-        if: env.UPLOAD_ARTIFACT == 'true'
+        # if: env.UPLOAD_ARTIFACT == 'true'
+        if: false
         run: |
           sed -i '/dpiAware/d' res/manifest.xml
           pushd ./libs/portable
@@ -254,10 +272,12 @@ jobs:
           mv ./target/release/rustdesk-portable-packer.exe ./SignOutput/rustdesk-${{ env.VERSION }}-${{ matrix.job.arch }}.exe
 
       - name: Add MSBuild to PATH
+        if: false
         uses: microsoft/setup-msbuild@v2
 
       - name: Build msi
-        if: env.UPLOAD_ARTIFACT == 'true'
+        if: false
+        # if: env.UPLOAD_ARTIFACT == 'true'
         run: |
           pushd ./res/msi
           python preprocess.py --arp -d ../../rustdesk
