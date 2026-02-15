@@ -49,7 +49,6 @@ env:
 
 jobs:
   generate-bridge:
-    if: false
     uses: ./.github/workflows/bridge.yml
 
   build-RustDeskTempTopMostWindow:
