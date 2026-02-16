@@ -234,13 +234,13 @@ jobs:
 
       - name: Zip
         shell: powershell
-        run: Compress-Archive -Path "./rustdesk/*" -DestinationPath rustdesk_${{ github.sha }}.zip
+        run: Compress-Archive -Path "./rustdesk/*" -DestinationPath rustdesk_${{ matrix.job.target }}_${{ github.sha }}.zip
 
       - name: Publish release for unsigned artifact
         if: env.UPLOAD_ARTIFACT == 'true'
         uses: softprops/action-gh-release@v1
         with:
-          files: rustdesk_${{ github.sha }}.zip
+          files: rustdesk_${{ matrix.job.target }}_${{ github.sha }}.zip
           tag_name: ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
