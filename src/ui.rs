@@ -866,3 +866,4 @@ pub fn get_icon() -> String {
     }
 
 }
+
