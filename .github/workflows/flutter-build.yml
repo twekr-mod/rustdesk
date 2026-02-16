@@ -62,7 +62,35 @@ jobs:
     strategy:
       fail-fast: false
 
+  test-zip-release:
+    runs-on: windows-2022
+    permissions:
+      contents: write
+    steps:
+      - run: mkdir zip_me
+
+      - run: echo "file_1" > zip_me/file_1.txt
+
+      - run: echo "file_2" > zip_me/file_2.txt
+
+      - run: echo "file_3" > zip_me/file_3.txt
+
+      - run: echo "file_4" > zip_me/file_4.txt
+
+      - name: Zip it
+        shell: powershell
+        run: Compress-Archive -Path "zip_me/*" -DestinationPath me.zip
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: me.zip
+          tag_name: test_release_v0.0.0
+          draft: false
+          prerelease: false
+
   build-for-windows-flutter:
+    if: false
     name: ${{ matrix.job.target }}
     needs: [build-RustDeskTempTopMostWindow, generate-bridge]
     runs-on: ${{ matrix.job.os }}
