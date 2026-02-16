@@ -165,6 +165,12 @@ jobs:
           head -n 100 "${VCPKG_ROOT}/buildtrees/ffmpeg/build-${{ matrix.job.vcpkg-triplet }}-rel-out.log" || true
         shell: bash
 
+      - name: List files
+        env:
+          VCPKG_DEFAULT_HOST_TRIPLET: ${{ matrix.job.vcpkg-triplet }}
+        run: ls ${VCPKG_ROOT}/installed/${{ matrix.job.vcpkg-triplet }}/lib
+        shell: bash
+
       - name: Build rustdesk
         run: |
           # Windows: build RustDesk
