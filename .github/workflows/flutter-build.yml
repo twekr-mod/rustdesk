@@ -8,7 +8,7 @@ on:
         default: true
       upload-tag:
         type: string
-        default: "mod"
+        default: rustdesk-mod-${{ github.sha }}
 
 # NOTE: F-Droid builder script 'flutter/build_fdroid.sh' reads environment
 # variables from this workflow!
@@ -144,10 +144,6 @@ jobs:
           vcpkgDirectory: C:\vcpkg
           vcpkgGitCommitId: ${{ env.VCPKG_COMMIT_ID }}
           doNotCache: false
-
-      - name: Print env
-        shell: bash
-        run: env
 
       - name: Install vcpkg dependencies
         env:
