@@ -49,6 +49,10 @@
 RustDesk (and Rust on Windows in general) needs the MSVC C++ toolchain.
 
 1. Download **Visual Studio Build Tools 2022** from <https://visualstudio.microsoft.com/visual-cpp-build-tools/>.
+
+    Alternatively, you can download the **Visual Studio Community 2022** installer directly:
+    <https://aka.ms/vs/17/release/vs_community.exe>
+
 2. In the installer, select the **"Desktop development with C++"** workload.
     - Make sure the following components are checked (they usually are by default):
         - MSVC v143 – VS 2022 C++ x64/x86 build tools
