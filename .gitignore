@@ -1,6 +1,5 @@
 /build
 /target
-.vscode
 .idea
 .DS_Store
 libsciter-gtk.so
@@ -55,3 +54,5 @@ vcpkg_installed
 flutter/lib/generated_plugin_registrant.dart
 libsciter.dylib
 flutter/web/
+
+/tmp
