@@ -56,3 +56,5 @@ libsciter.dylib
 flutter/web/
 
 /tmp
+.vscode
+!/.vscode
