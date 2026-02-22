@@ -2204,8 +2204,8 @@ impl Connection {
                 }
             }
 
-            #[cfg(not(any(target_os = "android", target_os = "ios")))]
-            self.try_start_cm_ipc();
+            // #[cfg(not(any(target_os = "android", target_os = "ios")))]
+            // self.try_start_cm_ipc();
 
             #[cfg(not(target_os = "linux"))]
             let err_msg = "".to_owned();
@@ -2267,13 +2267,13 @@ impl Connection {
                     #[cfg(target_os = "linux")]
                     self.linux_headless_handle.wait_desktop_cm_ready().await;
                     self.send_logon_response().await;
-                    self.try_start_cm(lr.my_id.clone(), lr.my_name.clone(), self.authorized);
+                    // self.try_start_cm(lr.my_id.clone(), lr.my_name.clone(), self.authorized);
                 } else {
                     self.send_login_error(err_msg).await;
                 }
             } else if lr.password.is_empty() {
                 if err_msg.is_empty() {
-                    self.try_start_cm(lr.my_id, lr.my_name, false);
+                    // self.try_start_cm(lr.my_id, lr.my_name, false);
                 } else {
                     self.send_login_error(
                         crate::client::LOGIN_MSG_DESKTOP_SESSION_NOT_READY_PASSWORD_EMPTY,
@@ -2290,7 +2290,7 @@ impl Connection {
                     if err_msg.is_empty() {
                         self.send_login_error(crate::client::LOGIN_MSG_PASSWORD_WRONG)
                             .await;
-                        self.try_start_cm(lr.my_id, lr.my_name, false);
+                        // self.try_start_cm(lr.my_id, lr.my_name, false);
                     } else {
                         self.send_login_error(
                             crate::client::LOGIN_MSG_DESKTOP_SESSION_NOT_READY_PASSWORD_WRONG,
@@ -2303,7 +2303,7 @@ impl Connection {
                         #[cfg(target_os = "linux")]
                         self.linux_headless_handle.wait_desktop_cm_ready().await;
                         self.send_logon_response().await;
-                        self.try_start_cm(lr.my_id, lr.my_name, self.authorized);
+                        // self.try_start_cm(lr.my_id, lr.my_name, self.authorized);
                     } else {
                         self.send_login_error(err_msg).await;
                     }
@@ -2321,11 +2321,11 @@ impl Connection {
                         self.require_2fa.take();
                         raii::AuthedConnID::set_session_2fa(self.session_key());
                         self.send_logon_response().await;
-                        self.try_start_cm(
-                            self.lr.my_id.to_owned(),
-                            self.lr.my_name.to_owned(),
-                            self.authorized,
-                        );
+                        // self.try_start_cm(
+                        //     self.lr.my_id.to_owned(),
+                        //     self.lr.my_name.to_owned(),
+                        //     self.authorized,
+                        // );
                         if !tfa.hwid.is_empty() && Self::enable_trusted_devices() {
                             Config::add_trusted_device(TrustedDevice {
                                 hwid: tfa.hwid,
@@ -2372,13 +2372,13 @@ impl Connection {
                         if uuid == uuid_old {
                             self.from_switch = true;
                             self.send_logon_response().await;
-                            self.try_start_cm(
-                                lr.my_id.clone(),
-                                lr.my_name.clone(),
-                                self.authorized,
-                            );
-                            #[cfg(not(any(target_os = "android", target_os = "ios")))]
-                            self.try_start_cm_ipc();
+                            // self.try_start_cm(
+                            //     lr.my_id.clone(),
+                            //     lr.my_name.clone(),
+                            //     self.authorized,
+                            // );
+                            // #[cfg(not(any(target_os = "android", target_os = "ios")))]
+                            // self.try_start_cm_ipc();
                         }
                     }
                 }
